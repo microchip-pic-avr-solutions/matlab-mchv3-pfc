@@ -50,7 +50,7 @@ fc_v = 10;                          % Outer Loop Cross over frequency in Hz
 %% Set up Soft Start/Ramping up the reference voltage for Voltage loop 
 Vref = Vout;                        % Reference Voltage
 Vout_init = Vin_pk;                 % Initial Voltage
-T_rise = 0.526;                     % Rise up time
+T_rise = 0.20;                     % Rise up time
 Slope = (Vref-Vout_init)/T_rise;    % Slope 
 
 
