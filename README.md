@@ -1,46 +1,34 @@
 ![image](images/microchip.png) 
-# Demonstration Readme for Mathematical Model of Single-Stage Boost Power Factor Correction Converter using MATLAB and Simulink
+# MATLAB-Simulink model of Single-Stage Boost Power Factor Correction Converter
 
 ## 1. INTRODUCTION
-The design of switched-mode power supply (SMPS) for different power applications is a significant concern in industries. The quality of the power consumed should be taken care of during the design, which demands a near unity power factor (PF) to be maintained. Applying a power factor correction(PFC) converter is one of the methods of improving the power quality, and it has become an essential part of power supplies and drives. Controllers are required along with the converter to achieve good PF. The compensator design is the major issue in the implementation of PFC. This work mainly discusses the design for a Single Stage Boost PFC converter. A mathematical model is also developed by using MATLAB software.
+This document describes how to configure and run the MATLAB-Simulink model of Single-Stage Boost Power Factor Correction Converter.
+
+The Microchip dsPICDEM™ MCHV-3 Development Board [DM330023-3](https://www.microchip.com/en-us/development-tool/dm330023-3) includes a front-end Single-Stage Boost Power Factor Correction Unit and a High-Voltage Three-Phase Motor Control Inverter.
+By default, the model is configured to simulate the Power Correction Converter in the  dsPICDEM™ MCHV-3 Development Board.
 
 ## 2.	SUGGESTED DEMONSTRATION REQUIREMENTS
 ### 2.1 MATLAB Model Required for the Demonstration
 -  MATLAB model can be cloned or downloaded as zip file from the Github repository ([link](https://github.com/microchip-pic-avr-solutions/matlab-mchv3-pfc)).
 
-### 2.2	Software Tools Used for Testing the MATLAB/Simulink Model
+### 2.2	Software Tools Required for the Demonstration
 1.	MATLAB R2022a
 
-> **NOTE:**</br>
->The software used for testing the model during release is listed above. It is recommended to use the version listed above or later versions for building the model.
-
-### 2.3	Hardware Tools Required for the Demonstration
-- dsPICDEM™ MCHV-3 Development Board [DM330023-3](https://www.microchip.com/en-us/development-tool/dm330023-3)
-
-> **NOTE:**</br>
->In this document, hereinafter High-Voltage Motor Control Development Board selected for setting up the demonstration is referred as Development Board. 
-
-> **NOTE:**</br>
->All items listed under this section Hardware Tools Required for the Demonstration are available at [microchip DIRECT](https://www.microchipdirect.com/).
-
-
-
 ## 3.	BASIC DEMONSTRATION
-Follow the below instructions step-by-step, to set up and run the PFC demo application:
+Follow the below instructions step-by-step, to set up and run the MATLAB and Simulink model of power factor correction converter
 
-1. Launch MATLAB (refer the section [“2.2 Sofware Tools Used for Testing the MATLAB/Simulink Model"](#22-software-tools-used-for-testing-the-matlabsimulink-model)).
-2. Open the folder downloaded from the repository, in which MATLAB files are saved (refer the section ["2.1 MATLAB Model Required for the Demonstration"](#21-matlab-model-required-for-the-demonstration)).
+1. Launch MATLAB R2022a 
+2. Open the folder downloaded from the [Github repository](https://github.com/microchip-pic-avr-solutions/matlab-mchv3-pfc)
 
     <p align="left" >
-    <img  src="images/dem1.png"></p>
+    <img  src="images/dem1.png">
 
-3. Double click and open the .m file. This .m file contains the configuration parameters required for running the PFC.Run the file by clicking the **Run** icon and wait till all variables gets loaded on the **Workspace** tab.
+3. Double-click and open the **PFC_Mathematicalmodel_MCHV3_data.m** file from the folder. This **.m file** contains the configuration parameters required for running the model. Execute the file by clicking the **Run** icon and wait until all the variables are loaded in the **Workspace** tab.
 
     <p align="left">
-      <img  src="images/dem2.png"></p>
-    </p>
+      <img  src="images/dem2.png">
 
-4. Double click on the PFC Simulink model.
+4. Double click on the **PFC_Mathematicalmodel_MCHV3.slx** from the folder to open the Simulink model.
 
     <p align="left">
       <img  src="images/dem3.png">
@@ -50,25 +38,23 @@ Follow the below instructions step-by-step, to set up and run the PFC demo appli
     <p align="left">
       <img  src="images/dem4.png">
 
-6. Simulink Scope is used to plot the signals.
+6. Double click on the **Scope** to view the input and output signals in the system.
 
     <p align="left">
       <img  src="images/dem5.png">
 
+    Example plots are shown below:
     <p align="left">
       <img  src="images/dem8.png"> 
 
     <p align="left">
       <img  src="images/dem9.png">   
 
-7. Variable load is configured in the model to see the dynamic perfomance of the system where the load can be varied by using a manual switch.
+7. **Variable load** subsystem can be used to test the model under different load conditions to check the dynamic performance.
 
     <p align="left">
       <img  src="images/dem6.png">
 
-8. Similarly, the variation with respect to the input voltage is also incorporated in the model where input voltage can be varied by using a manual switch.
+8. **Input subsystem** is provided with two input sources ,and it can be used to vary the applied input voltage to the model.
     <p align="left">
       <img  src="images/dem7.png">
-
-
-REFERENCES

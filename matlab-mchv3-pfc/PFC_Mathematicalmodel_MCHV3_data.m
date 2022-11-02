@@ -11,7 +11,6 @@
  s = tf('s');
 
 %% Simulation Parameters
-
 %% Set circuit parameters
 Po = 1000;                          % Output Power of the converter
 Vout = 380;                         % Output Voltage
@@ -25,79 +24,59 @@ C = 3*470e-6;                       % Output Capacitance
 R = (Vout^2)/Po;                    % Equivalent load Resistance
 
 %% Set PWM Switching frequency
-
 fsw = 80e3;                         % PWM frequency
-T_pwm = 1/fsw;                      % PWM switching time period
+T_pwm = 1/fsw;                      
 %% Set Sample Ratio/Sample Times
-Isr = 1;                            % Inner Loop Sampling Ratio
-Osr = 16;                           % Outer Loop Sampling Ratio
-Tsi = Isr / fsw;                    % Sampling time in sec for Current Loop
-Tsv = Osr / fsw;                    % Sampling time in sec for Voltage Loop
+Isr = 1;                            
+Osr = 16;                           
+Tsi = Isr / fsw;                  
+Tsv = Osr / fsw;                    
 
 %% Set Base Values for Gains
 Ibase = 21.3;                       % Ibase
 Vbase = 453;                        % Vbase 
 
-KiL = 1/Ibase;                       % Current sensing gain
-Kvo = 1/Vbase;                       % DC bus voltage sensing gain
-Kvin = 1/Vbase;                      % Feed-forward voltage sensing gain
-Kmul = Vpk_min/(2*Vbase);            % Multiplier gain
+KiL = 1/Ibase;                      
+Kvo = 1/Vbase;                      
+Kvin = 1/Vbase;                     
+Kmul = Vpk_min/(2*Vbase);           
 
 %% Set Control System Parameters
-fc_i = fsw/10;                      % Inner Loop Desired crossover frequency in Hz 
-fc_v = 10;                          % Outer Loop Cross over frequency in Hz
+fc_i = fsw/10;                      
+fc_v = 10;                          
 
 %% Set up Soft Start/Ramping up the reference voltage for Voltage loop 
-Vref = Vout;                        % Reference Voltage
-Vout_init = Vin_pk;                 % Initial Voltage
-T_rise = 0.20;                     % Rise up time
-Slope = (Vref-Vout_init)/T_rise;    % Slope 
-
+Vref = Vout;                        
+Vout_init = Vin_pk;                 
+T_rise = 0.20;                    
+Slope = (Vref-Vout_init)/T_rise;    
 
 %% Current Loop Control (Inductor current Transfer function)[ IL / d]
 Gid = Vout/(s*L);
 
 %% Current loop compensator calculation
-fz_i = fc_i/10;                             % Zero frequency in Hz
-Tz_i = 1/(2*pi*fz_i);
+fz_i = fc_i/10;                             
 
-Gci = (2*pi*fc_i*L)/(KiL*Vout);             % Gain Value
+Gci = (2*pi*fc_i*L)/(KiL*Vout);            
 
 Kp_i = Gci;                        
-Ki_i = Kp_i/Tz_i;
+Ki_i = Kp_i*2*pi*fz_i;
 
 Gic_comp = Kp_i+Ki_i/s;
 Gicl = Gid*Gic_comp*KiL;
 
-%% The coefficients for the discrete current controller
-Kp_id = Kp_i;                        
-Ki_id = Ki_i*Tsi;
-
 %% Voltage Loop Control (Inductor current Transfer function)[ IL / d]
 Gvc = (2*Kmul)/(Kvin*KiL*C*Vout*s);
 %% Voltage loop compensator calculation
-fz_v = 1;                                            % Zero frequency in Hz
-Tz_v = 1/(2*pi*fz_v);
+fz_v = 1;                                            
 
-Gcv = (C*Vout*2*pi*fc_v*Kvin*KiL)/(Kvo*2*Kmul);      % Gain Value
+Gcv = (C*Vout*2*pi*fc_v*Kvin*KiL)/(Kvo*2*Kmul);     
 
 Kp_v = Gcv;
-Ki_v = Kp_v/Tz_v;
+Ki_v = Kp_v*2*pi*fz_v;
 
 Gvc_comp = Kp_v+Ki_v/s;
 Gvcl = (Gvc*Gvc_comp*Kvo);
-
-%% The coefficients for the discrete voltage controller
-Kp_vd = Kp_v;
-Ki_vd = Ki_v*Tsv;
-
-%% Display the Values
-
-fprintf('Kp_v = %f\n', Kp_vd);
-fprintf('Ki_v = %f\n', Ki_vd);
-fprintf('Kp_i = %f\n', Kp_id);
-fprintf('Ki_i = %f\n', Ki_id);
-fprintf('Kmul = %f\n', Kmul*32767);
 
 %% Bode plot settings
  P = bodeoptions;
